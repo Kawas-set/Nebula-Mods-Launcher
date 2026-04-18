@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nebula Mods Launcher</title>
+  <meta name="description" content="Unofficial fan-made launcher for browsing and installing Among Us mods from official GitHub releases." />
+  <meta name="theme-color" content="#0f1220" />
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121932;
+      --card: rgba(20, 27, 56, 0.82);
+      --stroke: rgba(255, 255, 255, 0.08);
+      --text: #eef2ff;
+      --muted: #b7c0e0;
+      --accent: #8a2be2;
+      --accent-2: #00c2ff;
+      --danger: #ff5e7e;
+      --success: #35d07f;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --max: 1150px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(138, 43, 226, 0.22), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(0, 194, 255, 0.16), transparent 22%),
+        linear-gradient(180deg, #090d1a 0%, #0b1020 100%);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 52px 0 24px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(18, 25, 50, 0.9), rgba(12, 16, 32, 0.95));
+      border: 1px solid var(--stroke);
+      border-radius: 30px;
+      box-shadow: var(--shadow);
+      padding: 42px 28px 30px;
+      text-align: center;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -20% auto auto -10%;
+      width: 340px;
+      height: 340px;
+      background: radial-gradient(circle, rgba(138, 43, 226, 0.24), transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -18% auto;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(0, 194, 255, 0.16), transparent 60%);
+      pointer-events: none;
+    }
+
+    .logo-wrap {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .logo-wrap img {
+      width: min(420px, 92%);
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.35));
+    }
+
+    h1 {
+      position: relative;
+      z-index: 1;
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+    }
+
+    .subtitle {
+      position: relative;
+      z-index: 1;
+      margin: 14px auto 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .button-row {
+      position: relative;
+      z-index: 1;
+      margin-top: 26px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-width: 170px;
+      padding: 14px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      color: white;
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(12px);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--accent), #6c38ff);
+      border-color: rgba(255,255,255,0.12);
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(135deg, #993cff, #5b30f8);
+    }
+
+    .badges {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--stroke);
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    section {
+      padding: 18px 0;
+    }
+
+    .section-title {
+      margin: 0 0 18px;
+      font-size: clamp(1.4rem, 2vw, 2rem);
+      letter-spacing: -0.02em;
+    }
+
+    .grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .grid-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+      backdrop-filter: blur(10px);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.1rem;
+    }
+
+    .card p,
+    .card li {
+      color: var(--muted);
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    ul.clean {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    ul.clean li {
+      position: relative;
+      padding-left: 18px;
+      margin: 8px 0;
+    }
+
+    ul.clean li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent-2);
+    }
+
+    .mods-list {
+      columns: 2;
+      column-gap: 28px;
+    }
+
+    .mods-list li {
+      break-inside: avoid;
+    }
+
+    .preview {
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .preview img {
+      width: 100%;
+      height: auto;
+    }
+
+    .notice {
+      border-left: 4px solid var(--danger);
+      padding-left: 14px;
+      color: var(--muted);
+    }
+
+    .footer {
+      padding: 26px 0 50px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer a {
+      color: var(--text);
+    }
+
+    .small {
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 920px) {
+      .grid-2,
+      .grid-3 {
+        grid-template-columns: 1fr;
+      }
+
+      .mods-list {
+        columns: 1;
+      }
+
+      .hero-card {
+        padding: 34px 20px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container">
+      <div class="hero-card">
+        <div class="logo-wrap">
+          <img src="assets/logo.png" alt="Nebula Mods Launcher Banner" />
+        </div>
+
+        <h1>Nebula Mods Launcher 🌌</h1>
+        <p class="subtitle">
+          An unofficial fan-made launcher for <strong>Among Us</strong> mods.
+          Browse supported projects, view release information, and install mods from official public GitHub releases in one place.
+        </p>
+
+        <div class="button-row">
+          <a class="btn primary" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/releases/latest" target="_blank" rel="noopener noreferrer">⬇️ Download</a>
+          <a class="btn" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/issues" target="_blank" rel="noopener noreferrer">🐞 Report Issue</a>
+          <a class="btn" href="https://github.com/Kawas-set/Nebula-Mods-Launcher" target="_blank" rel="noopener noreferrer">📦 GitHub</a>
+        </div>
+
+        <div class="badges">
+          <span class="badge">Windows</span>
+          <span class="badge">Among Us</span>
+          <span class="badge">BepInEx Support</span>
+          <span class="badge">Active Project</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <div class="container grid grid-2">
+        <div class="card">
+          <h2 class="section-title">🚀 Release</h2>
+          <p>
+            Nebula Mods Launcher is designed to help users quickly find, review, and install
+            <strong>Among Us</strong> mods from official <strong>GitHub releases</strong> in one place.
+          </p>
+          <p>
+            There is no longer any need to manually search for releases, extract archives,
+            or figure out which files are compatible with your game version.
+            The launcher provides a catalog of mods, latest versions, release status, author,
+            source, and license information, and also helps users choose the correct assets for installation.
+          </p>
+          <p>
+            It supports installation of both <strong>archived mods</strong> and
+            <strong>DLL-based mods through BepInEx</strong>. The launcher also remembers your game folder,
+            making the process much simpler and more convenient.
+          </p>
+        </div>
+
+        <div class="card preview">
+          <img src="assets/preview.png" alt="Nebula Mods Launcher Preview" />
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <h2 class="section-title">✨ Features</h2>
+        <div class="grid grid-3">
+          <div class="card">
+            <h3>Browse Mods</h3>
+            <p>View supported Among Us mods in one organized catalog.</p>
+          </div>
+          <div class="card">
+            <h3>Release Info</h3>
+            <p>Check latest versions, release status, source links, and license information.</p>
+          </div>
+          <div class="card">
+            <h3>Simple Installation</h3>
+            <p>Install archive-based mods and DLL-based mods through BepInEx with less manual work.</p>
+          </div>
+          <div class="card">
+            <h3>Game Folder Memory</h3>
+            <p>The launcher remembers your selected Among Us folder for a smoother workflow.</p>
+          </div>
+          <div class="card">
+            <h3>Asset Selection</h3>
+            <p>Helps identify the correct release assets for installation.</p>
+          </div>
+          <div class="card">
+            <h3>Cleaner Workflow</h3>
+            <p>Designed to make mod setup easier and more convenient for users.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container grid grid-2">
+        <div class="card">
+          <h2 class="section-title">📦 Available Mods</h2>
+          <ul class="clean mods-list">
+            <li>Town of Host: Enhanced</li>
+            <li>Endless Host Roles</li>
+            <li>Project Lotus</li>
+            <li>Super New Roles</li>
+            <li>Town of Next: Edited</li>
+            <li>The Other Us Edited</li>
+            <li>Stellar Roles</li>
+            <li>Among Us Revamped</li>
+            <li>Among Us Revamped Enhanced</li>
+            <li>Launchpad Reloaded</li>
+            <li>BetterAmongUs</li>
+            <li>BetterPolus</li>
+            <li>PropHunt</li>
+            <li>Main Menu Enhanced</li>
+            <li>Emotes Mod</li>
+            <li>Emojis in the Mogus Chat</li>
+            <li>InvisiCrewmate</li>
+            <li>NewMod</li>
+            <li>Hydra</li>
+            <li>HostGuard</li>
+            <li>AUSummary</li>
+            <li>TOU Mira Legacy</li>
+            <li>Pokeball Mod</li>
+            <li>MalumMenu</li>
+            <li>AUnlocker</li>
+            <li>TechTech's Sound Mod</li>
+            <li>Airlock Client</li>
+          </ul>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h2 class="section-title">⚙️ Installation</h2>
+            <ul class="clean">
+              <li>Download the latest release of Nebula Mods Launcher</li>
+              <li>Extract the launcher files to any folder</li>
+              <li>Run the launcher</li>
+              <li>Select your Among Us game folder</li>
+              <li>Choose a mod from the catalog</li>
+              <li>Review the mod information and assets</li>
+              <li>Install the selected mod</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h2 class="section-title">🖥️ Requirements</h2>
+            <ul class="clean">
+              <li>A legitimate copy of <strong>Among Us</strong></li>
+              <li>Windows operating system</li>
+              <li>Internet connection for release loading and downloads</li>
+              <li><strong>BepInEx</strong> for DLL-based mods when required</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container grid grid-2">
+        <div class="card">
+          <h2 class="section-title">🔍 How It Works</h2>
+          <p>
+            Nebula Mods Launcher helps users access publicly available mod releases from their original sources.
+          </p>
+          <ul class="clean">
+            <li>Download archive releases</li>
+            <li>Install DLL-based mods</li>
+            <li>Show source and release information</li>
+            <li>Help users pick the correct file for their setup</li>
+          </ul>
+          <p class="small">
+            The launcher is designed to make installation easier, but compatibility and functionality
+            still depend on the original mod release.
+          </p>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">📝 Notes</h2>
+          <ul class="clean">
+            <li>Not all mods are compatible with each other</li>
+            <li>Some mods may only support specific game versions</li>
+            <li>Some mods may require additional setup steps outside the launcher</li>
+            <li>Availability depends on the original public source remaining online</li>
+            <li>Mod authors retain ownership of their own releases and materials</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container grid grid-2">
+        <div class="card">
+          <h2 class="section-title">🛠️ Planned Features</h2>
+          <ul class="clean">
+            <li>Improved compatibility checks</li>
+            <li>Better release asset detection</li>
+            <li>More detailed mod information pages</li>
+            <li>Expanded mod catalog</li>
+            <li>Additional installation quality-of-life improvements</li>
+            <li>Improved error handling and status feedback</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">💬 Support</h2>
+          <p>
+            If you find a bug, have a suggestion, or want to report an issue,
+            please open an issue in the repository.
+          </p>
+          <div class="button-row" style="justify-content:flex-start; margin-top:16px;">
+            <a class="btn primary" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/issues" target="_blank" rel="noopener noreferrer">Open Issues</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container grid grid-2">
+        <div class="card">
+          <h2 class="section-title">🤝 Credits</h2>
+          <ul class="clean">
+            <li><strong>Among Us</strong> by <strong>Innersloth LLC</strong></li>
+            <li>Third-party mods by their respective authors</li>
+            <li>Nebula Mods Launcher as an unofficial fan-made project</li>
+          </ul>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">⚠️ Important Notice</h2>
+          <p class="notice">
+            This launcher is intended to help users access third-party mods from their original public sources when available.
+            It does <strong>not</strong> include, distribute, or replace the base game files of <strong>Among Us</strong>.
+          </p>
+          <p class="small">
+            Users are responsible for reviewing the source, author, and license information of any mod they choose to install.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container card">
+        <h2 class="section-title">📄 Disclaimer</h2>
+        <p class="muted">
+          This launcher is an unofficial fan-made tool intended to help users access and install Among Us mods from official public repositories or release pages.
+        </p>
+        <p class="muted">
+          This launcher is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC.
+          Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+        </p>
+        <p class="muted">
+          This launcher is not affiliated with, endorsed by, or sponsored by the authors of any third-party mods featured in it, unless explicitly stated otherwise.
+        </p>
+        <p class="muted">
+          Third-party mods remain the property of their respective authors. This launcher does not claim ownership of any third-party content and does not rebrand such mods as its own.
+        </p>
+        <p class="muted">
+          When available, the launcher downloads mod files directly from the official public repositories or release pages provided by the original mod authors.
+        </p>
+        <p class="muted">
+          All mod names, logos, trademarks, and visual identities belong to their respective owners.
+        </p>
+        <p class="muted">
+          This project does not include, distribute, or replace the base game files of Among Us.
+        </p>
+      </div>
+    </section>
+
+    <section>
+      <div class="container card">
+        <h2 class="section-title">⚖️ Legal</h2>
+        <p class="muted">
+          If you are a copyright or trademark owner and believe any referenced content should be removed or adjusted,
+          please contact the project maintainer or open an issue for review.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      © 2026 Nebula Mods Launcher · Unofficial fan-made project for Among Us mods
+    </div>
+  </footer>
+</body>
+</html>
