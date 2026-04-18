@@ -1,0 +1,224 @@
+[
+  {
+    "id": "tohe",
+    "name": "Town of Host: Enhanced",
+    "author": "EnhancedNetwork",
+    "owner": "EnhancedNetwork",
+    "repo": "TownofHost-Enhanced",
+    "preferredAssetName": "",
+    "steamItchAssetName": "SteamItchio",
+    "microsoftStoreAssetName": "EpicMsStore",
+    "epicGamesAssetName": "EpicMsStore"
+  },
+  {
+    "id": "ehr",
+    "name": "Endless Host Roles",
+    "author": "Gurge44",
+    "owner": "Gurge44",
+    "repo": "EndlessHostRoles",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "lotus",
+    "name": "Project Lotus",
+    "author": "Lotus-AU",
+    "owner": "Lotus-AU",
+    "repo": "LotusContinued",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "snr",
+    "name": "Super New Roles",
+    "author": "SuperNewRoles",
+    "owner": "SuperNewRoles",
+    "repo": "SuperNewRoles",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "tone",
+    "name": "Town of Next: Edited",
+    "author": "qin-qwq",
+    "owner": "qin-qwq",
+    "repo": "TownofNext-Edited",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "theotherus_edited",
+    "name": "The Other Us Edited",
+    "author": "mxyx-club",
+    "owner": "mxyx-club",
+    "repo": "TheOtherUs-Edited",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "stellar_roles",
+    "name": "Stellar Roles",
+    "author": "Mr-Fluuff",
+    "owner": "Mr-Fluuff",
+    "repo": "StellarRolesAU",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "amongus_revamped",
+    "name": "Among Us Revamped",
+    "author": "ApeMV",
+    "owner": "ApeMV",
+    "repo": "AmongUsRevamped",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "amongus_revamped_enhanced",
+    "name": "Among Us Revamped Enhanced",
+    "author": "Epic-Y",
+    "owner": "Epic-Y",
+    "repo": "AmongUsRevamped-Enhanced",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "launchpad_reloaded",
+    "name": "Launchpad Reloaded",
+    "author": "All-Of-Us-Mods",
+    "owner": "All-Of-Us-Mods",
+    "repo": "LaunchpadReloaded",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "better_among_us",
+    "name": "BetterAmongUs",
+    "author": "D1GQ",
+    "owner": "D1GQ",
+    "repo": "BetterAmongUs",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "better_polus",
+    "name": "BetterPolus",
+    "author": "Brybry16",
+    "owner": "Brybry16",
+    "repo": "BetterPolus",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "prophunt",
+    "name": "PropHunt",
+    "author": "ugackMiner53",
+    "owner": "ugackMiner53",
+    "repo": "PropHunt",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "main_menu_enhanced",
+    "name": "Main Menu Enhanced",
+    "author": "3X3CODE",
+    "owner": "3X3CODE",
+    "repo": "MainMenuEnhanced",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "emotes_mod",
+    "name": "Emotes Mod",
+    "author": "WanderingPix",
+    "owner": "WanderingPix",
+    "repo": "Emotes-Mod",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "emojis_chat",
+    "name": "Emojis in the Mogus Chat",
+    "author": "WanderingPix",
+    "owner": "WanderingPix",
+    "repo": "Emojis-in-the-mogus-chat",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "invisi_crewmate",
+    "name": "InvisiCrewmate",
+    "author": "AnonymousDonut",
+    "owner": "AnonymousDonut",
+    "repo": "InvisiCrewmate",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "new_mod",
+    "name": "NewMod",
+    "author": "CallOfCreator",
+    "owner": "CallOfCreator",
+    "repo": "NewMod",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "hydra",
+    "name": "Hydra",
+    "author": "MrDiamond64",
+    "owner": "MrDiamond64",
+    "repo": "Hydra",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "host_guard",
+    "name": "HostGuard",
+    "author": "RaresHonour",
+    "owner": "RaresHonour",
+    "repo": "HostGuard",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "au_summary",
+    "name": "AUSummary",
+    "author": "Ninja-AU-Modding",
+    "owner": "Ninja-AU-Modding",
+    "repo": "AUSummary",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "tou_mira_legacy",
+    "name": "TOU Mira Legacy",
+    "author": "AU-Avengers",
+    "owner": "AU-Avengers",
+    "repo": "TouMiraLegacy",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "pokeball_mod",
+    "name": "Pokeball Mod",
+    "author": "ReforgeMods",
+    "owner": "ReforgeMods",
+    "repo": "Among-Us-Pokeball-Mod",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "malum_menu",
+    "name": "MalumMenu",
+    "author": "scp222thj",
+    "owner": "scp222thj",
+    "repo": "MalumMenu",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "aunlocker",
+    "name": "AUnlocker",
+    "author": "astra1dev",
+    "owner": "astra1dev",
+    "repo": "AUnlocker",
+    "preferredAssetName": "",
+    "steamItchAssetName": "Steam_Itch",
+    "microsoftStoreAssetName": "MicrosoftStore",
+    "epicGamesAssetName": "EpicGames"
+  },
+  {
+    "id": "techtech_sound",
+    "name": "TechTech's Sound Mod",
+    "author": "techtechcy",
+    "owner": "techtechcy",
+    "repo": "TechTechsSoundMod",
+    "preferredAssetName": ""
+  },
+  {
+    "id": "airlock_client",
+    "name": "Airlock Client",
+    "author": "YouTwbey",
+    "owner": "YouTwbey",
+    "repo": "Airlock-Client",
+    "preferredAssetName": ""
+  }
+]

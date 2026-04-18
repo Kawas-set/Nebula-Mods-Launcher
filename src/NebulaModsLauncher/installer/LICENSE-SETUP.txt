@@ -1,0 +1,13 @@
+This launcher is an unofficial fan-made tool intended to help users access and install Among Us mods from official public repositories or release pages.
+
+This launcher is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC. Portions of the materials contained herein are property of Innersloth LLC. Copyright Innersloth LLC.
+
+This launcher is not affiliated with, endorsed by, or sponsored by the authors of any third-party mods featured in it, unless explicitly stated otherwise.
+
+Third-party mods remain the property of their respective authors. This launcher does not claim ownership of any third-party content and does not rebrand such mods as its own.
+
+When available, the launcher downloads mod files directly from the official public repositories or release pages provided by the original mod authors.
+
+All mod names, logos, trademarks, and visual identities belong to their respective owners.
+
+This project does not include, distribute, or replace the base game files of Among Us.

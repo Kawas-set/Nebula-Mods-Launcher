@@ -1,0 +1,61 @@
+<Window
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    x:Class="ModLauncher.Views.AboutWindow"
+    Title="{Binding AboutTitle}"
+    Icon="/Assets/nebula-mods-launcher.ico"
+    Width="820"
+    Height="640"
+    MinWidth="720"
+    MinHeight="520"
+    WindowStartupLocation="CenterOwner"
+    Background="#0A1020">
+
+  <Border Background="#0B1221" BorderBrush="#365A92" BorderThickness="1" CornerRadius="22" Margin="12" Padding="20">
+    <Grid RowDefinitions="Auto,18,*,18,Auto">
+      <StackPanel Spacing="6">
+        <TextBlock Text="{Binding AboutTitle}"
+                   FontSize="26"
+                   FontWeight="Bold"
+                   Foreground="#F7FBFF"/>
+        <TextBlock Text="Nebula Mods Launcher"
+                   FontSize="14"
+                   FontWeight="SemiBold"
+                   Foreground="#8FB3FF"/>
+      </StackPanel>
+
+      <Border Grid.Row="2"
+              Background="#10192D"
+              BorderBrush="#2E4771"
+              BorderThickness="1"
+              CornerRadius="18"
+              Padding="16">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+          <TextBlock Text="{Binding AboutBody}"
+                     TextWrapping="Wrap"
+                     FontSize="14"
+                     LineHeight="22"
+                     Foreground="#DCE7FF"/>
+        </ScrollViewer>
+      </Border>
+
+      <DockPanel Grid.Row="4">
+        <TextBlock Text="{Binding FooterTagline}"
+                   Foreground="#8B95BA"
+                   VerticalAlignment="Center"/>
+
+        <Button DockPanel.Dock="Right"
+                Background="#1B3150"
+                BorderBrush="#5F79C7"
+                BorderThickness="1"
+                CornerRadius="16"
+                Padding="18,10"
+                Click="CloseClicked">
+          <TextBlock Text="{Binding AboutClose}"
+                     FontWeight="Bold"
+                     Foreground="#F7FBFF"/>
+        </Button>
+      </DockPanel>
+    </Grid>
+  </Border>
+</Window>
