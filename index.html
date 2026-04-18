@@ -5,23 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Nebula Mods Launcher</title>
   <meta name="description" content="Unofficial fan-made launcher for browsing and installing Among Us mods from official GitHub releases." />
-  <meta name="theme-color" content="#0f1220" />
+  <meta name="theme-color" content="#090f1f" />
 
   <style>
     :root {
-      --bg: #0b1020;
-      --bg-soft: #121932;
-      --card: rgba(20, 27, 56, 0.82);
-      --stroke: rgba(255, 255, 255, 0.08);
+      --bg: #050812;
+      --bg-2: #0a1020;
+      --bg-3: #101938;
+      --card: rgba(15, 22, 45, 0.68);
+      --card-strong: rgba(13, 19, 39, 0.88);
+      --stroke: rgba(255,255,255,0.08);
+      --stroke-strong: rgba(255,255,255,0.16);
       --text: #eef2ff;
-      --muted: #b7c0e0;
-      --accent: #8a2be2;
-      --accent-2: #00c2ff;
-      --danger: #ff5e7e;
-      --success: #35d07f;
-      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-      --radius: 22px;
-      --max: 1150px;
+      --muted: #b6c2e7;
+      --accent: #8d42ff;
+      --accent-2: #2ac8ff;
+      --accent-3: #ff63cf;
+      --success: #39d77a;
+      --shadow: 0 28px 80px rgba(0,0,0,0.42);
+      --shadow-soft: 0 16px 40px rgba(0,0,0,0.24);
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --radius-sm: 14px;
+      --max: 1200px;
     }
 
     * {
@@ -36,11 +43,27 @@
       margin: 0;
       font-family: Inter, Segoe UI, Arial, sans-serif;
       color: var(--text);
+      line-height: 1.65;
+      overflow-x: hidden;
       background:
-        radial-gradient(circle at top, rgba(138, 43, 226, 0.22), transparent 28%),
-        radial-gradient(circle at 85% 10%, rgba(0, 194, 255, 0.16), transparent 22%),
-        linear-gradient(180deg, #090d1a 0%, #0b1020 100%);
-      line-height: 1.6;
+        radial-gradient(circle at 12% 0%, rgba(141,66,255,0.22), transparent 25%),
+        radial-gradient(circle at 88% 8%, rgba(42,200,255,0.15), transparent 24%),
+        radial-gradient(circle at 50% 100%, rgba(255,99,207,0.10), transparent 30%),
+        linear-gradient(180deg, #04070f 0%, #09101e 45%, #091121 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.18;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
+      -webkit-mask-image: radial-gradient(circle at center, black 35%, transparent 90%);
     }
 
     a {
@@ -49,8 +72,8 @@
     }
 
     img {
-      max-width: 100%;
       display: block;
+      max-width: 100%;
     }
 
     .container {
@@ -58,141 +81,333 @@
       margin: 0 auto;
     }
 
+    .topbar-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      padding-top: 16px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 12px 16px;
+      border: 1px solid var(--stroke);
+      border-radius: 999px;
+      background: rgba(10, 16, 32, 0.72);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .brand-dot {
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      box-shadow: 0 0 18px rgba(42, 200, 255, 0.8);
+      flex: 0 0 auto;
+    }
+
+    .brand-title {
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: 0.18s ease;
+    }
+
+    .nav a:hover {
+      color: #fff;
+      border-color: var(--stroke);
+      background: rgba(255,255,255,0.04);
+    }
+
     .hero {
-      padding: 52px 0 24px;
+      padding: 18px 0 24px;
+      position: relative;
     }
 
     .hero-card {
       position: relative;
       overflow: hidden;
-      background: linear-gradient(180deg, rgba(18, 25, 50, 0.9), rgba(12, 16, 32, 0.95));
+      border-radius: 38px;
       border: 1px solid var(--stroke);
-      border-radius: 30px;
+      background:
+        linear-gradient(180deg, rgba(13, 19, 39, 0.90), rgba(8, 12, 26, 0.96));
       box-shadow: var(--shadow);
-      padding: 42px 28px 30px;
-      text-align: center;
+      padding: 30px;
+      backdrop-filter: blur(18px);
+      isolation: isolate;
     }
 
     .hero-card::before {
       content: "";
       position: absolute;
-      inset: -20% auto auto -10%;
-      width: 340px;
-      height: 340px;
-      background: radial-gradient(circle, rgba(138, 43, 226, 0.24), transparent 60%);
+      top: -220px;
+      left: -180px;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(141,66,255,0.24), transparent 66%);
       pointer-events: none;
     }
 
     .hero-card::after {
       content: "";
       position: absolute;
-      inset: auto -12% -18% auto;
-      width: 360px;
-      height: 360px;
-      background: radial-gradient(circle, rgba(0, 194, 255, 0.16), transparent 60%);
+      right: -180px;
+      bottom: -220px;
+      width: 560px;
+      height: 560px;
+      background: radial-gradient(circle, rgba(42,200,255,0.18), transparent 66%);
       pointer-events: none;
     }
 
-    .logo-wrap {
+    .hero-grid {
       position: relative;
       z-index: 1;
-      display: flex;
-      justify-content: center;
-      margin-bottom: 14px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 28px;
+      align-items: center;
     }
 
-    .logo-wrap img {
-      width: min(420px, 92%);
-      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.35));
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .eyebrow-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      box-shadow: 0 0 14px rgba(42,200,255,0.8);
     }
 
     h1 {
-      position: relative;
-      z-index: 1;
       margin: 0;
-      font-size: clamp(2rem, 4vw, 3.5rem);
-      line-height: 1.08;
-      letter-spacing: -0.03em;
+      font-size: clamp(2.4rem, 4.9vw, 4.9rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
     }
 
-    .subtitle {
-      position: relative;
-      z-index: 1;
-      margin: 14px auto 0;
-      max-width: 760px;
+    .gradient-text {
+      background: linear-gradient(90deg, #ffffff 0%, #dde5ff 30%, #91e5ff 68%, #dc70ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-text p {
+      margin: 18px 0 0;
       color: var(--muted);
-      font-size: 1.05rem;
+      font-size: 1.08rem;
+      max-width: 680px;
     }
 
     .button-row {
-      position: relative;
-      z-index: 1;
-      margin-top: 26px;
       display: flex;
-      gap: 12px;
-      justify-content: center;
+      gap: 14px;
       flex-wrap: wrap;
+      margin-top: 24px;
     }
 
     .btn {
+      position: relative;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      min-width: 170px;
-      padding: 14px 18px;
-      border-radius: 16px;
+      gap: 12px;
+      min-width: 178px;
+      padding: 15px 22px;
+      border-radius: 18px;
       border: 1px solid var(--stroke);
-      color: white;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(12px);
-      transition: transform .18s ease, border-color .18s ease, background .18s ease;
-      font-weight: 700;
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      overflow: hidden;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.08),
+        0 14px 32px rgba(0,0,0,0.24);
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+      transform: translateX(-100%);
+      transition: transform .55s ease;
+      pointer-events: none;
     }
 
     .btn:hover {
       transform: translateY(-2px);
-      border-color: rgba(255,255,255,0.18);
-      background: rgba(255,255,255,0.07);
+      border-color: var(--stroke-strong);
+    }
+
+    .btn:hover::before {
+      transform: translateX(100%);
     }
 
     .btn.primary {
-      background: linear-gradient(135deg, var(--accent), #6c38ff);
-      border-color: rgba(255,255,255,0.12);
+      background: linear-gradient(135deg, rgba(141,66,255,0.96), rgba(98,60,255,0.94) 52%, rgba(220,96,255,0.92));
+      border-color: rgba(255,255,255,0.14);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.10),
+        0 18px 42px rgba(105, 60, 255, 0.30);
     }
 
     .btn.primary:hover {
-      background: linear-gradient(135deg, #993cff, #5b30f8);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.12),
+        0 22px 48px rgba(105, 60, 255, 0.35);
     }
 
-    .badges {
-      position: relative;
-      z-index: 1;
-      margin-top: 18px;
+    .btn.secondary {
+      background: linear-gradient(135deg, rgba(42,200,255,0.12), rgba(141,66,255,0.10));
+    }
+
+    .btn.ghost {
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.03));
+    }
+
+    .btn svg {
+      width: 19px;
+      height: 19px;
+      flex: 0 0 19px;
+      opacity: 0.95;
+    }
+
+    .mini-badges {
       display: flex;
-      justify-content: center;
       gap: 10px;
       flex-wrap: wrap;
+      margin-top: 18px;
     }
 
-    .badge {
-      padding: 8px 12px;
+    .mini-badge {
+      padding: 9px 14px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.05);
       border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
       color: var(--muted);
-      font-size: 0.92rem;
-      font-weight: 600;
+      font-size: 0.94rem;
+      font-weight: 700;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .hero-preview {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.03);
+      box-shadow: var(--shadow);
+      padding: 10px;
+    }
+
+    .hero-preview img {
+      width: 100%;
+      height: auto;
+      border-radius: 22px;
+    }
+
+    .hero-preview::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.05), transparent 30%, transparent 70%, rgba(0,0,0,0.20));
+      pointer-events: none;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .stat {
+      border: 1px solid var(--stroke);
+      border-radius: 20px;
+      padding: 16px 16px 14px;
+      background: rgba(255,255,255,0.04);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
     }
 
     section {
-      padding: 18px 0;
+      padding: 20px 0;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
     }
 
     .section-title {
-      margin: 0 0 18px;
-      font-size: clamp(1.4rem, 2vw, 2rem);
-      letter-spacing: -0.02em;
+      margin: 0;
+      font-size: clamp(1.55rem, 2.25vw, 2.3rem);
+      letter-spacing: -0.03em;
+    }
+
+    .section-subtitle {
+      margin: 0;
+      color: var(--muted);
+      max-width: 760px;
     }
 
     .grid {
@@ -209,17 +424,50 @@
     }
 
     .card {
-      background: var(--card);
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--radius-xl);
       border: 1px solid var(--stroke);
-      border-radius: var(--radius);
+      background: linear-gradient(180deg, var(--card), rgba(10, 14, 28, 0.90));
+      backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
-      padding: 22px;
-      backdrop-filter: blur(10px);
+      padding: 24px;
+      isolation: isolate;
+      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--stroke-strong);
+      box-shadow: 0 30px 90px rgba(0,0,0,0.46);
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -70px;
+      left: -50px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(141,66,255,0.10), transparent 70%);
+      pointer-events: none;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -80px;
+      width: 180px;
+      height: 180px;
+      background: radial-gradient(circle, rgba(42,200,255,0.08), transparent 70%);
+      pointer-events: none;
     }
 
     .card h3 {
       margin: 0 0 10px;
-      font-size: 1.1rem;
+      font-size: 1.12rem;
+      letter-spacing: -0.02em;
     }
 
     .card p,
@@ -227,14 +475,31 @@
       color: var(--muted);
     }
 
-    .muted {
-      color: var(--muted);
+    .feature-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+      color: #fff;
+      background: linear-gradient(135deg, rgba(141,66,255,0.25), rgba(42,200,255,0.14));
+      border: 1px solid var(--stroke);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.07),
+        0 10px 24px rgba(0,0,0,0.18);
+    }
+
+    .feature-icon svg {
+      width: 22px;
+      height: 22px;
     }
 
     ul.clean {
       list-style: none;
-      padding: 0;
       margin: 0;
+      padding: 0;
     }
 
     ul.clean li {
@@ -248,6 +513,7 @@
       position: absolute;
       left: 0;
       color: var(--accent-2);
+      font-weight: 900;
     }
 
     .mods-list {
@@ -259,42 +525,158 @@
       break-inside: avoid;
     }
 
-    .preview {
-      border-radius: 22px;
-      overflow: hidden;
-      border: 1px solid var(--stroke);
-      background: rgba(255,255,255,0.03);
-    }
-
-    .preview img {
-      width: 100%;
-      height: auto;
-    }
-
-    .notice {
-      border-left: 4px solid var(--danger);
+    .info-box {
+      border-left: 4px solid var(--accent-3);
       padding-left: 14px;
       color: var(--muted);
     }
 
+    .showcase-card {
+      padding: 14px;
+    }
+
+    .showcase-card img {
+      width: 100%;
+      border-radius: 20px;
+      border: 1px solid var(--stroke);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.22);
+    }
+
     .footer {
-      padding: 26px 0 50px;
-      text-align: center;
+      padding: 42px 0 60px;
+    }
+
+    .footer-shell {
+      position: relative;
+      overflow: hidden;
+      border-radius: 30px;
+      border: 1px solid var(--stroke);
+      background:
+        linear-gradient(180deg, rgba(12,18,36,0.92), rgba(8,12,24,0.96));
+      box-shadow: var(--shadow);
+      padding: 26px 24px;
+    }
+
+    .footer-shell::before {
+      content: "";
+      position: absolute;
+      top: -120px;
+      left: -100px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(141,66,255,0.16), transparent 70%);
+      pointer-events: none;
+    }
+
+    .footer-shell::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      bottom: -120px;
+      width: 280px;
+      height: 280px;
+      background: radial-gradient(circle, rgba(42,200,255,0.12), transparent 70%);
+      pointer-events: none;
+    }
+
+    .footer-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 22px;
+      align-items: center;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand-glow {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent-2), var(--accent));
+      box-shadow: 0 0 18px rgba(42,200,255,0.85);
+      flex: 0 0 auto;
+    }
+
+    .footer-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .footer-text {
       color: var(--muted);
-      font-size: 0.95rem;
+      max-width: 620px;
     }
 
-    .footer a {
-      color: var(--text);
+    .footer-links {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .small {
-      font-size: 0.95rem;
+    .footer-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--stroke);
+      background: rgba(255,255,255,0.04);
+      color: var(--muted);
+      font-weight: 700;
+      transition: 0.18s ease;
     }
 
-    @media (max-width: 920px) {
+    .footer-links a:hover {
+      color: #fff;
+      border-color: var(--stroke-strong);
+      background: rgba(255,255,255,0.07);
+    }
+
+    .footer-bottom {
+      position: relative;
+      z-index: 1;
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: 0.93rem;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+      transition:
+        opacity 0.7s ease,
+        transform 0.7s cubic-bezier(.2,.65,.2,1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.in-view {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.06s; }
+    .reveal-delay-2 { transition-delay: 0.12s; }
+    .reveal-delay-3 { transition-delay: 0.18s; }
+    .reveal-delay-4 { transition-delay: 0.24s; }
+
+    @media (max-width: 980px) {
+      .hero-grid,
       .grid-2,
-      .grid-3 {
+      .grid-3,
+      .stats,
+      .footer-grid {
         grid-template-columns: 1fr;
       }
 
@@ -303,36 +685,153 @@
       }
 
       .hero-card {
-        padding: 34px 20px 24px;
+        padding: 20px 16px 18px;
+      }
+
+      .section-header {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .btn {
+        min-width: 100%;
+      }
+
+      .topbar {
+        border-radius: 24px;
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .nav {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .footer-links {
+        justify-content: flex-start;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal,
+      .reveal.in-view,
+      .btn,
+      .card,
+      .nav a,
+      .footer-links a {
+        transition: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+      }
+
+      .btn::before {
+        display: none;
       }
     }
   </style>
 </head>
 <body>
+  <div class="topbar-wrap">
+    <div class="container">
+      <div class="topbar reveal in-view">
+        <div class="brand">
+          <span class="brand-dot"></span>
+          <span class="brand-title">Nebula Mods Launcher</span>
+        </div>
+
+        <nav class="nav">
+          <a href="#features">Features</a>
+          <a href="#mods">Mods</a>
+          <a href="#install">Install</a>
+          <a href="#legal">Legal</a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
   <header class="hero">
     <div class="container">
-      <div class="hero-card">
-        <div class="logo-wrap">
-          <img src="assets/logo.png" alt="Nebula Mods Launcher Banner" />
+      <div class="hero-card reveal in-view">
+        <div class="hero-grid">
+          <div class="hero-text reveal in-view reveal-delay-1">
+            <div class="eyebrow">
+              <span class="eyebrow-dot"></span>
+              Unofficial fan-made launcher
+            </div>
+
+            <h1><span class="gradient-text">Nebula Mods Launcher</span></h1>
+
+            <p>
+              Browse supported <strong>Among Us</strong> mods, check release details,
+              and install files from official public GitHub releases in one polished place.
+            </p>
+
+            <div class="button-row">
+              <a class="btn primary" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/releases/latest" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 4v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <path d="M8 10l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M5 19h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <span>Download</span>
+              </a>
+
+              <a class="btn secondary" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/issues" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                  <path d="M12 3a9 9 0 100 18 9 9 0 000-18z" stroke="currentColor" stroke-width="2"/>
+                  <path d="M12 8v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <circle cx="12" cy="16" r="1.2" fill="currentColor"/>
+                </svg>
+                <span>Report Issue</span>
+              </a>
+
+              <a class="btn ghost" href="https://github.com/Kawas-set/Nebula-Mods-Launcher" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                  <path d="M12 .7a12 12 0 00-3.79 23.39c.6.11.82-.26.82-.58l-.02-2.04c-3.34.72-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.72.08-.72 1.2.08 1.84 1.24 1.84 1.24 1.07 1.84 2.8 1.31 3.49 1 .11-.78.42-1.31.76-1.61-2.67-.31-5.48-1.34-5.48-5.95 0-1.31.47-2.39 1.24-3.24-.12-.31-.54-1.57.12-3.28 0 0 1.01-.32 3.3 1.24a11.5 11.5 0 016 0c2.28-1.56 3.29-1.24 3.29-1.24.67 1.71.25 2.97.12 3.28.77.85 1.23 1.93 1.23 3.24 0 4.62-2.81 5.63-5.49 5.94.43.37.82 1.1.82 2.22l-.01 3.3c0 .32.22.69.82.58A12 12 0 0012 .7z"/>
+                </svg>
+                <span>GitHub</span>
+              </a>
+            </div>
+
+            <div class="mini-badges">
+              <span class="mini-badge">Windows</span>
+              <span class="mini-badge">Among Us</span>
+              <span class="mini-badge">BepInEx Support</span>
+              <span class="mini-badge">Active Project</span>
+            </div>
+          </div>
+
+          <div class="hero-preview reveal in-view reveal-delay-2">
+            <img src="assets/logo.png" alt="Nebula Mods Launcher Banner">
+          </div>
         </div>
 
-        <h1>Nebula Mods Launcher 🌌</h1>
-        <p class="subtitle">
-          An unofficial fan-made launcher for <strong>Among Us</strong> mods.
-          Browse supported projects, view release information, and install mods from official public GitHub releases in one place.
-        </p>
-
-        <div class="button-row">
-          <a class="btn primary" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/releases/latest" target="_blank" rel="noopener noreferrer">⬇️ Download</a>
-          <a class="btn" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/issues" target="_blank" rel="noopener noreferrer">🐞 Report Issue</a>
-          <a class="btn" href="https://github.com/Kawas-set/Nebula-Mods-Launcher" target="_blank" rel="noopener noreferrer">📦 GitHub</a>
-        </div>
-
-        <div class="badges">
-          <span class="badge">Windows</span>
-          <span class="badge">Among Us</span>
-          <span class="badge">BepInEx Support</span>
-          <span class="badge">Active Project</span>
+        <div class="stats reveal in-view reveal-delay-3">
+          <div class="stat">
+            <div class="stat-label">Platform</div>
+            <div class="stat-value">Windows</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Source</div>
+            <div class="stat-value">GitHub Releases</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Support</div>
+            <div class="stat-value">Archive + DLL Mods</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Integration</div>
+            <div class="stat-value">BepInEx Ready</div>
+          </div>
         </div>
       </div>
     </div>
@@ -340,67 +839,105 @@
 
   <main>
     <section>
-      <div class="container grid grid-2">
-        <div class="card">
-          <h2 class="section-title">🚀 Release</h2>
-          <p>
-            Nebula Mods Launcher is designed to help users quickly find, review, and install
-            <strong>Among Us</strong> mods from official <strong>GitHub releases</strong> in one place.
-          </p>
-          <p>
-            There is no longer any need to manually search for releases, extract archives,
-            or figure out which files are compatible with your game version.
-            The launcher provides a catalog of mods, latest versions, release status, author,
-            source, and license information, and also helps users choose the correct assets for installation.
-          </p>
-          <p>
-            It supports installation of both <strong>archived mods</strong> and
-            <strong>DLL-based mods through BepInEx</strong>. The launcher also remembers your game folder,
-            making the process much simpler and more convenient.
-          </p>
+      <div class="container">
+        <div class="section-header reveal">
+          <div>
+            <h2 class="section-title">🚀 Release</h2>
+            <p class="section-subtitle">
+              Nebula Mods Launcher helps users quickly find, review, and install Among Us mods from official GitHub releases.
+            </p>
+          </div>
         </div>
 
-        <div class="card preview">
-          <img src="assets/preview.png" alt="Nebula Mods Launcher Preview" />
+        <div class="grid grid-2">
+          <div class="card reveal reveal-delay-1">
+            <p>
+              There is no longer any need to manually search for releases, extract archives,
+              or guess which files match your game version.
+            </p>
+            <p>
+              The launcher shows a catalog of mods, latest versions, release status,
+              author, source, and license information, and helps users choose the correct assets for installation.
+            </p>
+            <p>
+              It supports both <strong>archived mods</strong> and <strong>DLL-based mods through BepInEx</strong>,
+              while remembering your game folder for a smoother workflow.
+            </p>
+          </div>
+
+          <div class="card showcase-card reveal reveal-delay-2">
+            <img src="assets/preview.png" alt="Nebula Mods Launcher Features Preview">
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
+    <section id="features">
       <div class="container">
-        <h2 class="section-title">✨ Features</h2>
+        <div class="section-header reveal">
+          <div>
+            <h2 class="section-title">✨ Features</h2>
+            <p class="section-subtitle">
+              Built to make mod browsing and installation cleaner, faster, and easier.
+            </p>
+          </div>
+        </div>
+
         <div class="grid grid-3">
-          <div class="card">
+          <div class="card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
             <h3>Browse Mods</h3>
             <p>View supported Among Us mods in one organized catalog.</p>
           </div>
-          <div class="card">
-            <h3>Release Info</h3>
-            <p>Check latest versions, release status, source links, and license information.</p>
+
+          <div class="card reveal reveal-delay-1">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 6v6l4 2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3>Latest Releases</h3>
+            <p>See the newest versions, release status, source links, and licenses.</p>
           </div>
-          <div class="card">
-            <h3>Simple Installation</h3>
-            <p>Install archive-based mods and DLL-based mods through BepInEx with less manual work.</p>
+
+          <div class="card reveal reveal-delay-2">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 3v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M8 11l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <h3>Easy Installation</h3>
+            <p>Install archive-based mods and DLL-based mods through BepInEx.</p>
           </div>
-          <div class="card">
+
+          <div class="card reveal">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M4 7h6l2 2h8v8a2 2 0 01-2 2H6a2 2 0 01-2-2V7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </div>
             <h3>Game Folder Memory</h3>
-            <p>The launcher remembers your selected Among Us folder for a smoother workflow.</p>
+            <p>The launcher remembers your selected Among Us folder for quicker setup.</p>
           </div>
-          <div class="card">
-            <h3>Asset Selection</h3>
-            <p>Helps identify the correct release assets for installation.</p>
+
+          <div class="card reveal reveal-delay-1">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 20s7-4 7-10V5l-7-2-7 2v5c0 6 7 10 7 10z" stroke="currentColor" stroke-width="2"/><path d="M9.5 12.5l1.5 1.5 3.5-3.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Smart Asset Selection</h3>
+            <p>Helps identify the correct files for your game and mod version.</p>
           </div>
-          <div class="card">
-            <h3>Cleaner Workflow</h3>
-            <p>Designed to make mod setup easier and more convenient for users.</p>
+
+          <div class="card reveal reveal-delay-2">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M13 3L4 14h6l-1 7 9-11h-6l1-7z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+            </div>
+            <h3>Smoother Workflow</h3>
+            <p>Designed to reduce manual work and make installation more convenient.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section>
+    <section id="mods">
       <div class="container grid grid-2">
-        <div class="card">
+        <div class="card reveal">
           <h2 class="section-title">📦 Available Mods</h2>
           <ul class="clean mods-list">
             <li>Town of Host: Enhanced</li>
@@ -433,21 +970,21 @@
           </ul>
         </div>
 
-        <div class="grid">
-          <div class="card">
+        <div class="grid" id="install">
+          <div class="card reveal reveal-delay-1">
             <h2 class="section-title">⚙️ Installation</h2>
             <ul class="clean">
               <li>Download the latest release of Nebula Mods Launcher</li>
               <li>Extract the launcher files to any folder</li>
               <li>Run the launcher</li>
-              <li>Select your Among Us game folder</li>
+              <li>Select your Among Us folder</li>
               <li>Choose a mod from the catalog</li>
-              <li>Review the mod information and assets</li>
+              <li>Review mod information and assets</li>
               <li>Install the selected mod</li>
             </ul>
           </div>
 
-          <div class="card">
+          <div class="card reveal reveal-delay-2">
             <h2 class="section-title">🖥️ Requirements</h2>
             <ul class="clean">
               <li>A legitimate copy of <strong>Among Us</strong></li>
@@ -462,24 +999,7 @@
 
     <section>
       <div class="container grid grid-2">
-        <div class="card">
-          <h2 class="section-title">🔍 How It Works</h2>
-          <p>
-            Nebula Mods Launcher helps users access publicly available mod releases from their original sources.
-          </p>
-          <ul class="clean">
-            <li>Download archive releases</li>
-            <li>Install DLL-based mods</li>
-            <li>Show source and release information</li>
-            <li>Help users pick the correct file for their setup</li>
-          </ul>
-          <p class="small">
-            The launcher is designed to make installation easier, but compatibility and functionality
-            still depend on the original mod release.
-          </p>
-        </div>
-
-        <div class="card">
+        <div class="card reveal">
           <h2 class="section-title">📝 Notes</h2>
           <ul class="clean">
             <li>Not all mods are compatible with each other</li>
@@ -489,12 +1009,8 @@
             <li>Mod authors retain ownership of their own releases and materials</li>
           </ul>
         </div>
-      </div>
-    </section>
 
-    <section>
-      <div class="container grid grid-2">
-        <div class="card">
+        <div class="card reveal reveal-delay-1">
           <h2 class="section-title">🛠️ Planned Features</h2>
           <ul class="clean">
             <li>Improved compatibility checks</li>
@@ -505,23 +1021,12 @@
             <li>Improved error handling and status feedback</li>
           </ul>
         </div>
-
-        <div class="card">
-          <h2 class="section-title">💬 Support</h2>
-          <p>
-            If you find a bug, have a suggestion, or want to report an issue,
-            please open an issue in the repository.
-          </p>
-          <div class="button-row" style="justify-content:flex-start; margin-top:16px;">
-            <a class="btn primary" href="https://github.com/Kawas-set/Nebula-Mods-Launcher/issues" target="_blank" rel="noopener noreferrer">Open Issues</a>
-          </div>
-        </div>
       </div>
     </section>
 
     <section>
       <div class="container grid grid-2">
-        <div class="card">
+        <div class="card reveal">
           <h2 class="section-title">🤝 Credits</h2>
           <ul class="clean">
             <li><strong>Among Us</strong> by <strong>Innersloth LLC</strong></li>
@@ -530,62 +1035,105 @@
           </ul>
         </div>
 
-        <div class="card">
+        <div class="card reveal reveal-delay-1">
           <h2 class="section-title">⚠️ Important Notice</h2>
-          <p class="notice">
+          <p class="info-box">
             This launcher is intended to help users access third-party mods from their original public sources when available.
             It does <strong>not</strong> include, distribute, or replace the base game files of <strong>Among Us</strong>.
           </p>
-          <p class="small">
+          <p style="color: var(--muted);">
             Users are responsible for reviewing the source, author, and license information of any mod they choose to install.
           </p>
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="container card">
-        <h2 class="section-title">📄 Disclaimer</h2>
-        <p class="muted">
-          This launcher is an unofficial fan-made tool intended to help users access and install Among Us mods from official public repositories or release pages.
-        </p>
-        <p class="muted">
-          This launcher is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC.
-          Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
-        </p>
-        <p class="muted">
-          This launcher is not affiliated with, endorsed by, or sponsored by the authors of any third-party mods featured in it, unless explicitly stated otherwise.
-        </p>
-        <p class="muted">
-          Third-party mods remain the property of their respective authors. This launcher does not claim ownership of any third-party content and does not rebrand such mods as its own.
-        </p>
-        <p class="muted">
-          When available, the launcher downloads mod files directly from the official public repositories or release pages provided by the original mod authors.
-        </p>
-        <p class="muted">
-          All mod names, logos, trademarks, and visual identities belong to their respective owners.
-        </p>
-        <p class="muted">
-          This project does not include, distribute, or replace the base game files of Among Us.
-        </p>
-      </div>
-    </section>
+    <section id="legal">
+      <div class="container grid grid-2">
+        <div class="card reveal">
+          <h2 class="section-title">📄 Disclaimer</h2>
+          <p style="color: var(--muted);">
+            This launcher is an unofficial fan-made tool intended to help users access and install Among Us mods from official public repositories or release pages.
+          </p>
+          <p style="color: var(--muted);">
+            This launcher is not affiliated with Among Us or Innersloth LLC, and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC.
+            Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
+          </p>
+          <p style="color: var(--muted);">
+            This launcher is not affiliated with, endorsed by, or sponsored by the authors of any third-party mods featured in it, unless explicitly stated otherwise.
+          </p>
+        </div>
 
-    <section>
-      <div class="container card">
-        <h2 class="section-title">⚖️ Legal</h2>
-        <p class="muted">
-          If you are a copyright or trademark owner and believe any referenced content should be removed or adjusted,
-          please contact the project maintainer or open an issue for review.
-        </p>
+        <div class="card reveal reveal-delay-1">
+          <h2 class="section-title">⚖️ Legal</h2>
+          <p style="color: var(--muted);">
+            Third-party mods remain the property of their respective authors.
+            This launcher does not claim ownership of any third-party content and does not rebrand such mods as its own.
+          </p>
+          <p style="color: var(--muted);">
+            When available, the launcher downloads mod files directly from the official public repositories or release pages provided by the original mod authors.
+          </p>
+          <p style="color: var(--muted);">
+            If you are a copyright or trademark owner and believe any referenced content should be removed or adjusted,
+            please contact the project maintainer or open an issue for review.
+          </p>
+        </div>
       </div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="container">
-      © 2026 Nebula Mods Launcher · Unofficial fan-made project for Among Us mods
+      <div class="footer-shell reveal">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-brand">
+              <span class="footer-brand-glow"></span>
+              <span class="footer-title">Nebula Mods Launcher</span>
+            </div>
+            <div class="footer-text">
+              Unofficial fan-made launcher for Among Us mods. Built to make browsing, checking releases,
+              and installing supported mods cleaner and more convenient.
+            </div>
+          </div>
+
+          <div class="footer-links">
+            <a href="https://github.com/Kawas-set/Nebula-Mods-Launcher/releases/latest" target="_blank" rel="noopener noreferrer">Download</a>
+            <a href="https://github.com/Kawas-set/Nebula-Mods-Launcher/issues" target="_blank" rel="noopener noreferrer">Issues</a>
+            <a href="https://github.com/Kawas-set/Nebula-Mods-Launcher" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© 2026 Nebula Mods Launcher</span>
+          <span>Among Us and related materials are property of Innersloth LLC.</span>
+        </div>
+      </div>
     </div>
   </footer>
+
+  <script>
+    (function () {
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reducedMotion) return;
+
+      const elements = document.querySelectorAll('.reveal');
+      if (!elements.length) return;
+
+      const observer = new IntersectionObserver((entries, obs) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('in-view');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.12,
+        rootMargin: '0px 0px -40px 0px'
+      });
+
+      elements.forEach((el) => observer.observe(el));
+    })();
+  </script>
 </body>
 </html>
