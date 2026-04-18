@@ -1,0 +1,12 @@
+bin/
+obj/
+.vs/
+Downloads/
+artifacts/
+.idea/
+.vscode/
+*.user
+*.suo
+*.userprefs
+installer/innosetup-6.7.1.exe
+NebulaModsLauncher_Project_Notes.txt
