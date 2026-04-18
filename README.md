@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Nebula Mods Launcher Logo" width="420">
+  <img src="assets/logo.png" alt="Nebula Mods Launcher Logo" width="450">
 </p>
 
 <h1 align="center">Nebula Mods Launcher 🌌</h1>
