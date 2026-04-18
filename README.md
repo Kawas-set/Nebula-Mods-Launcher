@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Nebula Mods Launcher Banner" width="450">
+  <img src="assets/logo.png" alt="Nebula Mods Launcher Banner" width="390">
 </p>
 
 <h1 align="center">Nebula Mods Launcher 🌌</h1>
@@ -12,8 +12,8 @@
   <a href="https://github.com/Kawas-set/Nebula-Mods-Launcher/releases/latest">
     <img src="https://img.shields.io/badge/Download-Latest%20Release-8A2BE2?style=for-the-badge&logo=github" alt="Download Latest Release">
   </a>
-  <a href="https://github.com/Kawas-set/Nebula-Mods-Launcher/releases">
-    <img src="https://img.shields.io/github/downloads/Kawas-set/Nebula-Mods-Launcher/total?style=for-the-badge&logo=github&label=Downloads" alt="GitHub Downloads">
+  <a href="https://github.com/Kawas-set/Nebula-Mods-Launcher/releases/latest">
+    <img src="https://img.shields.io/github/downloads/Kawas-set/Nebula-Mods-Launcher/latest/total?style=for-the-badge&logo=github&label=Setup%20Downloads" alt="Setup Downloads">
   </a>
   <a href="https://github.com/Kawas-set/Nebula-Mods-Launcher/issues">
     <img src="https://img.shields.io/badge/Report-Issue-ff4d4d?style=for-the-badge&logo=github" alt="Report Issue">
